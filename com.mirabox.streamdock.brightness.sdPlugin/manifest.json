@@ -1,0 +1,148 @@
+{
+  "Actions": [
+    {
+      "UUID": "com.mirabox.streamdock.brightness.all_brightness_dial",
+      "Icon": "static/img/icon.svg",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "center",
+          "FontSize": "16",
+          "Image": "static/img/icon.svg"
+        }
+      ],
+      "Settings": {
+        "step": 5
+      },
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false,
+      "Controllers": ["Knob", "Keypad", "Information"],
+      "Name": "全部亮度(旋钮)",
+      "Tooltip": "调整全部显示器亮度",
+      "PropertyInspectorPath": "./propertyInspector/brightness/index.html"
+    },
+    {
+      "UUID": "com.mirabox.streamdock.brightness.monitor_brightness_dial",
+      "Icon": "static/img/icon.svg",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "center",
+          "FontSize": "16",
+          "Image": "static/img/icon.svg"
+        }
+      ],
+      "Settings": {
+        "step": 5,
+        "refreshMs": 3000
+      },
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false,
+      "Controllers": ["Knob", "Keypad", "Information"],
+      "Name": "单屏亮度(旋钮)",
+      "Tooltip": "调整当前显示器亮度，按下切换显示器",
+      "PropertyInspectorPath": "./propertyInspector/brightness/index.html"
+    },
+    {
+      "UUID": "com.mirabox.streamdock.brightness.show_monitor_brightness",
+      "Icon": "static/img/icon.svg",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "center",
+          "FontSize": "16",
+          "Image": "static/img/icon.svg"
+        }
+      ],
+      "Settings": {
+        "monitorIndex": 1,
+        "refreshMs": 3000
+      },
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Information"],
+      "Name": "显示亮度(单屏)",
+      "Tooltip": "显示指定显示器亮度",
+      "PropertyInspectorPath": "./propertyInspector/brightness/index.html"
+    },
+    {
+      "UUID": "com.mirabox.streamdock.brightness.set_all_brightness",
+      "Icon": "static/img/icon.svg",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "center",
+          "FontSize": "16",
+          "Image": "static/img/icon.svg"
+        }
+      ],
+      "Settings": {
+        "value": 50
+      },
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Information"],
+      "Name": "设全部亮度",
+      "Tooltip": "将全部显示器亮度设为指定值",
+      "PropertyInspectorPath": "./propertyInspector/brightness/index.html"
+    },
+    {
+      "UUID": "com.mirabox.streamdock.brightness.increase_all_brightness",
+      "Icon": "static/img/icon.svg",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "center",
+          "FontSize": "16",
+          "Image": "static/img/icon.svg"
+        }
+      ],
+      "Settings": {
+        "step": 5
+      },
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Information"],
+      "Name": "增加全部亮度",
+      "Tooltip": "将全部亮度增加一个步长并应用",
+      "PropertyInspectorPath": "./propertyInspector/brightness/index.html"
+    },
+    {
+      "UUID": "com.mirabox.streamdock.brightness.decrease_all_brightness",
+      "Icon": "static/img/icon.svg",
+      "state": 0,
+      "States": [
+        {
+          "TitleAlignment": "center",
+          "FontSize": "16",
+          "Image": "static/img/icon.svg"
+        }
+      ],
+      "Settings": {
+        "step": 5
+      },
+      "UserTitleEnabled": false,
+      "SupportedInMultiActions": false,
+      "Controllers": ["Keypad", "Information"],
+      "Name": "减少全部亮度",
+      "Tooltip": "将全部亮度减少一个步长并应用",
+      "PropertyInspectorPath": "./propertyInspector/brightness/index.html"
+    }
+  ],
+  "Version": "0.0.1",
+  "Name": "MiraBoxBrightness",
+  "Icon": "static/img/icon.svg",
+  "CategoryIcon": "static/img/icon.svg",
+  "Category": "Brightness",
+  "Description": "MiraBox 显示器亮度控制",
+  "CodePath": "DemoPlugin.exe",
+  "SDKVersion": 1,
+  "Author": "jim",
+  "URL": "",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "7"
+    }
+  ]
+}

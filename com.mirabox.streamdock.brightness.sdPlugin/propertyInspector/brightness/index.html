@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Brightness</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Microsoft YaHei"; margin: 0; padding: 12px; }
+      .row { display: grid; grid-template-columns: 110px 1fr; gap: 8px; align-items: center; margin-bottom: 10px; }
+      .label { color: #111827; font-size: 13px; text-align: right; }
+      input[type="number"] { width: 100%; padding: 6px 8px; border: 1px solid #D1D5DB; border-radius: 6px; }
+      .hint { color: #6B7280; font-size: 12px; margin: 6px 0 10px; }
+      .hidden { display: none; }
+    </style>
+  </head>
+  <body>
+    <div class="hint" id="hint"></div>
+
+    <div class="row" id="row-step">
+      <div class="label">步长</div>
+      <div><input id="step" type="number" min="1" max="50" step="1" /></div>
+    </div>
+
+    <div class="row" id="row-refreshMs">
+      <div class="label">刷新(ms)</div>
+      <div><input id="refreshMs" type="number" min="250" max="60000" step="50" /></div>
+    </div>
+
+    <div class="row" id="row-monitorIndex">
+      <div class="label">显示器序号</div>
+      <div><input id="monitorIndex" type="number" min="1" max="99" step="1" /></div>
+    </div>
+
+    <div class="row" id="row-value">
+      <div class="label">目标亮度</div>
+      <div><input id="value" type="number" min="0" max="100" step="1" /></div>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
+
