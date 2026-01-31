@@ -1,6 +1,11 @@
 import json
 from typing import Any, Dict
 
+_TRANSPARENT_PNG_DATA_URL = (
+    "data:image/png;base64,"
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/6X5zP0AAAAASUVORK5CYII="
+)
+
 class Action:
     def __init__(self, action: str, context: str, settings: Dict, plugin):
         self.action = action
@@ -10,6 +15,7 @@ class Action:
         self.title_parameters = {}
         self._server = plugin.ws
         self.plugin = plugin
+        self.set_image(_TRANSPARENT_PNG_DATA_URL)
     
     def send_to_property_inspector(self, payload: Any):
         if self._server:

@@ -9,7 +9,7 @@ class AllBrightnessDial(BrightnessAction):
     def refresh_title(self) -> None:
         value = self.hub.get_all_brightness()
         #self.set_title(f"全部\n{value}%")
-        self.set_title(f"-{value}%\n全部")
+        self.set_title(f"{value}%\n")
 
     def on_dial_rotate(self, payload: dict):
         ticks = payload.get("ticks")
