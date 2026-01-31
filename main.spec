@@ -7,13 +7,13 @@ a = Analysis(
     pathex=['.'],
     binaries=[],
     datas=[],
-    hiddenimports=collect_submodules('src.actions') + ['websocket', 'PIL', 'PIL.Image', 'PIL.ImageDraw', 'requests'],
+    hiddenimports=collect_submodules('src.actions') + ['websocket'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
-    excludes=[],
+    excludes=['cryptography', 'PIL', 'requests'],
     noarchive=False,
-    optimize=0,
+    optimize=2,
 )
 pyz = PYZ(a.pure)
 
@@ -26,7 +26,7 @@ exe = EXE(
     name='DemoPlugin',
     debug=False,
     bootloader_ignore_signals=False,
-    strip=False,
+    strip=True,
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
