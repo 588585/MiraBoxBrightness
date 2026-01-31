@@ -318,7 +318,7 @@ Hub 里每次设置前会 scan：
 ## 11. 打包发布（PyInstaller）
 
 
-在项目根目录执行：(曾经不使用clean有bug，ai修复了但是还没测试)
+在项目根目录执行：(不使用clean有bug，ai可能修复了但是还没测试)
 
 ```powershell
 cd C:\xxxx\MiraBoxBrightness
