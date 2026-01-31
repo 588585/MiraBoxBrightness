@@ -1,6 +1,6 @@
-import os
 import importlib
 import inspect
+import pkgutil
 from typing import Dict, Type, Optional
 from .action import Action
 from .logger import Logger
@@ -57,47 +57,37 @@ class ActionFactory:
     @classmethod
     def scan_and_register_actions(cls):
         """扫描actions目录并自动注册所有Action类型"""
-        import sys
-        import traceback
-
-        # 获取正确的actions目录路径
-        if getattr(sys, 'frozen', False):
-            # 如果是打包后的环境，使用sys._MEIPASS
-            base_path = sys._MEIPASS
-            # 在打包环境下，从src目录下查找actions目录
-            actions_dir = os.path.join(base_path, 'src', 'actions')
-        else:
-            # 开发环境下使用相对路径
-            actions_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'actions')
-        if not os.path.exists(actions_dir):
-            Logger.error(f"Actions directory not found: {actions_dir}")
+        try:
+            import src.actions as actions_pkg
+        except Exception as e:
+            Logger.error(f"Failed to import src.actions package: {str(e)}")
             return
 
-        # 将src目录添加到Python路径中
-        src_dir = os.path.dirname(actions_dir)
-        if src_dir not in sys.path:
-            sys.path.insert(0, src_dir)
+        for module_info in pkgutil.iter_modules(getattr(actions_pkg, "__path__", [])):
+            module_name = getattr(module_info, "name", None)
+            if not module_name:
+                continue
+            if module_name.startswith("__"):
+                continue
 
-        for file_name in os.listdir(actions_dir):
-            if file_name.endswith('.py') and not file_name.startswith('__'):
-                module_name = file_name[:-3]  # 移除.py后缀
-                
-                try:
-                    module = importlib.import_module(f'actions.{module_name}')
-                    Logger.info(f"Loading action module: {module_name}")
-                    for name, obj in inspect.getmembers(module):
-                        if (inspect.isclass(obj) and 
-                            issubclass(obj, Action) and 
-                            obj != Action and
-                            getattr(obj, "__module__", None) == getattr(module, "__name__", None)):
-                            action_type = module_name.lower()
-                            cls.register_action(action_type, obj)
-                            Logger.info(f"Successfully registered action: {action_type} -> {obj.__name__}")
-                            Logger.info(f"Registered action types: {cls._action_types}")
-                except Exception as e:
-                    import traceback
-                    Logger.error(f"Error loading action module {module_name}: {str(e)}")
-                    Logger.error(traceback.format_exc())
+            try:
+                module = importlib.import_module(f"src.actions.{module_name}")
+                Logger.info(f"Loading action module: {module_name}")
+                for _, obj in inspect.getmembers(module):
+                    if (
+                        inspect.isclass(obj)
+                        and issubclass(obj, Action)
+                        and obj != Action
+                        and getattr(obj, "__module__", None) == getattr(module, "__name__", None)
+                    ):
+                        action_type = module_name.lower()
+                        cls.register_action(action_type, obj)
+                        Logger.info(f"Successfully registered action: {action_type} -> {obj.__name__}")
+                        Logger.info(f"Registered action types: {cls._action_types}")
+            except Exception as e:
+                import traceback
+                Logger.error(f"Error loading action module {module_name}: {str(e)}")
+                Logger.error(traceback.format_exc())
 
 # 自动扫描并注册所有Action类型
 ActionFactory.scan_and_register_actions()

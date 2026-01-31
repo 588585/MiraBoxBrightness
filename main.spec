@@ -1,15 +1,13 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+from PyInstaller.utils.hooks import collect_submodules
 
 a = Analysis(
     ['main.py'],
-    pathex=[],
+    pathex=['.'],
     binaries=[],
-    datas=[
-        ('src/actions', 'src/actions'),
-        ('src/core', 'src/core')
-    ],
-    hiddenimports=['websocket', 'PIL', 'PIL.Image', 'PIL.ImageDraw', 'requests'],
+    datas=[],
+    hiddenimports=collect_submodules('src.actions') + ['websocket', 'PIL', 'PIL.Image', 'PIL.ImageDraw', 'requests'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
