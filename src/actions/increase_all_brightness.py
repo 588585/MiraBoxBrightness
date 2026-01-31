@@ -8,7 +8,7 @@ class IncreaseAllBrightness(BrightnessAction):
 
     def refresh_title(self) -> None:
         step = self._get_step(default_step=5)
-        self.set_title(f"+{step}%\n全部")
+        self.set_title(self.plugin.t("inc_all", step=step))
 
     def on_key_up(self, payload: dict):
         step = self._get_step(default_step=5)
@@ -21,4 +21,3 @@ class IncreaseAllBrightness(BrightnessAction):
             self.show_ok()
         else:
             self.show_alert()
-

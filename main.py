@@ -1,4 +1,5 @@
 from src.core.plugin import Plugin
+import json
 import argparse
 import sys
 import threading
@@ -17,7 +18,11 @@ def main():
     try:
         # Logger.info(f"Plugin parameters - Port: {args.port}, UUID: {args.pluginUUID}, Event: {args.registerEvent}, Info: {args.info}")
         time.sleep(1)
-        plugin = Plugin(args.port, args.pluginUUID, args.registerEvent, args.info)
+        try:
+            info = json.loads(args.info)
+        except Exception:
+            info = {}
+        plugin = Plugin(args.port, args.pluginUUID, args.registerEvent, info)
         stop_event = threading.Event()
         def on_close(ws, close_status_code, close_msg):
             plugin.stop()

@@ -38,15 +38,14 @@ class ShowMonitorBrightness(BrightnessAction):
         self.hub.scan(force=False)
         count = self.hub.get_monitor_count()
         if count <= 0:
-            self.set_title("无显示器")
+            self.set_title(self.plugin.t("no_monitors"))
             return
         idx = self._get_monitor_index(count)
         brightness = self.hub.get_monitor_brightness(idx)
         if brightness is None:
-            self.set_title(f"屏{idx + 1}\n--")
+            self.set_title(self.plugin.t("screen_n_unknown", n=idx + 1))
         else:
-            self.set_title(f"屏{idx + 1}\n{brightness}%")
+            self.set_title(self.plugin.t("screen_n_value", n=idx + 1, value=brightness))
 
     def on_key_up(self, payload: dict):
         self.refresh_title()
-

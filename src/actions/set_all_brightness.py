@@ -11,7 +11,7 @@ class SetAllBrightness(BrightnessAction):
 
     def refresh_title(self) -> None:
         value = self._get_target()
-        self.set_title(f"设为\n{value}%")
+        self.set_title(self.plugin.t("set_to", value=value))
 
     def on_key_up(self, payload: dict):
         value = self._get_target()
@@ -23,4 +23,3 @@ class SetAllBrightness(BrightnessAction):
             self.show_ok()
         else:
             self.show_alert()
-

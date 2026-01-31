@@ -31,7 +31,7 @@ class MonitorBrightnessDial(BrightnessAction):
         self.hub.scan(force=False)
         count = self.hub.get_monitor_count()
         if count <= 0:
-            self.set_title("无显示器")
+            self.set_title(self.plugin.t("no_monitors"))
             return
         idx = self.hub.get_selected_monitor_index() % count
         brightness = self.hub.get_monitor_brightness(idx)

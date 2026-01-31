@@ -10,6 +10,26 @@ from .timer import Timer
 from .action import Action
 from .logger import Logger
 
+_TRANSLATIONS: Dict[str, Dict[str, str]] = {
+    "zh_CN": {
+        "no_monitors": "无显示器",
+        "screen_n_value": "屏{n}\n{value}%",
+        "screen_n_unknown": "屏{n}\n--",
+        "inc_all": "+{step}%\n全部",
+        "dec_all": "-{step}%\n全部",
+        "set_to": "设为\n{value}%",
+    },
+    "en": {
+        "no_monitors": "No displays",
+        "screen_n_value": "D{n}\n{value}%",
+        "screen_n_unknown": "D{n}\n--",
+        "inc_all": "+{step}%\nAll",
+        "dec_all": "-{step}%\nAll",
+        "set_to": "Set\n{value}%",
+    },
+}
+
+
 class Plugin:
     """Stream Dock插件的核心类，负责管理WebSocket连接和处理Stream Dock事件。
     
@@ -17,7 +37,7 @@ class Plugin:
     并管理插件的动作(Action)实例。每个动作实例对应Stream Dock界面上的一个按钮。
     """
     
-    def __init__(self, port: int, plugin_uuid: str, event: str, info: Dict[str, Any]):
+    def __init__(self, port: int, plugin_uuid: str, event: str, info: Any):
         """初始化插件实例
         
         Args:
@@ -30,6 +50,8 @@ class Plugin:
         self.global_settings: Any = None
         self.timer = Timer()
         self.plugin_uuid = plugin_uuid
+        self.info = info
+        self.locale = self._detect_locale(info)
         self.http_server = None
         self.http_server_thread = None
         
@@ -46,6 +68,33 @@ class Plugin:
         
         # Start WebSocket connection in a separate thread
         threading.Thread(target=self.ws.run_forever, daemon=True).start()
+
+    @staticmethod
+    def _normalize_locale(value: Any) -> str:
+        if not isinstance(value, str):
+            return "zh_CN"
+        v = value.strip().replace("-", "_").lower()
+        if v.startswith("zh"):
+            return "zh_CN"
+        return "en"
+
+    def _detect_locale(self, info: Any) -> str:
+        try:
+            if isinstance(info, dict):
+                app = info.get("application") or {}
+                lang = app.get("language") or app.get("Language") or app.get("lang")
+                return self._normalize_locale(lang)
+        except Exception:
+            return "zh_CN"
+        return "zh_CN"
+
+    def t(self, key: str, **kwargs: Any) -> str:
+        table = _TRANSLATIONS.get(getattr(self, "locale", "zh_CN"), _TRANSLATIONS["zh_CN"])
+        template = table.get(key) or _TRANSLATIONS["en"].get(key) or key
+        try:
+            return template.format(**kwargs)
+        except Exception:
+            return template
     
     def _on_open(self, ws, event: str, plugin_uuid: str):
         """WebSocket连接建立时的回调函数
