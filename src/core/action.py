@@ -3,7 +3,7 @@ from typing import Any, Dict
 
 _TRANSPARENT_PNG_DATA_URL = (
     "data:image/png;base64,"
-    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/6X5zP0AAAAASUVORK5CYII="
+    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNgAAIAAAUAAen63NgAAAAASUVORK5CYII="
 )
 
 class Action:
@@ -16,7 +16,7 @@ class Action:
         self._server = plugin.ws
         self.plugin = plugin
         self.set_image(_TRANSPARENT_PNG_DATA_URL)
-    
+
     def send_to_property_inspector(self, payload: Any):
         if self._server:
             self._server.send(json.dumps({
@@ -25,7 +25,7 @@ class Action:
                 'context': self.context,
                 'payload': payload
             }))
-    
+
     def set_state(self, state: int):
         if self._server:
             self._server.send(json.dumps({
@@ -33,7 +33,7 @@ class Action:
                 'context': self.context,
                 'payload': {'state': state}
             }))
-    
+
     def set_title(self, title: str):
         if self._server:
             self._server.send(json.dumps({
@@ -41,7 +41,7 @@ class Action:
                 'context': self.context,
                 'payload': {'title': title, 'target': 0}
             }))
-    
+
     def set_settings(self, payload: Any):
         if self._server:
             self.settings = payload
@@ -50,28 +50,28 @@ class Action:
                 'context': self.context,
                 'payload': payload
             }))
-    
+
     def open_url(self, url: str):
         if self._server:
             self._server.send(json.dumps({
                 'event': 'openUrl',
                 'payload': {'url': url}
             }))
-    
+
     def show_ok(self):
         if self._server:
             self._server.send(json.dumps({
                 'event': 'showOk',
                 'context': self.context
             }))
-    
+
     def show_alert(self):
         if self._server:
             self._server.send(json.dumps({
                 'event': 'showAlert',
                 'context': self.context
             }))
-    
+
     def set_image(self, url: str):
         if self._server:
             self._server.send(json.dumps({
@@ -79,7 +79,7 @@ class Action:
                 'context': self.context,
                 'payload': {'target': 0, 'image': url}
             }))
-    
+
     def log_message(self, message: str):
         if self._server:
             self._server.send(json.dumps({
